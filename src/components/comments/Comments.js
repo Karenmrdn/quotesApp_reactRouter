@@ -27,6 +27,10 @@ const Comments = () => {
     sendRequest(quoteId);
   }, [sendRequest, quoteId]);
 
+  const cancelHandler = () => {
+    setIsAddingComment(false);
+  };
+
   let comments;
 
   if (status === "pending") {
@@ -60,6 +64,7 @@ const Comments = () => {
         <NewCommentForm
           quoteId={params.quoteId}
           onAddedComment={addedCommentHandler}
+          onCancel={cancelHandler}
         />
       )}
       {comments}

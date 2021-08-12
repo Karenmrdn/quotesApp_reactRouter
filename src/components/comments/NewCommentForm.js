@@ -17,14 +17,19 @@ const NewCommentForm = (props) => {
     }
   }, [status, error, onAddedComment]);
 
-  const submitFormHandler = (event) => {
+  const submitFormHandler = async (event) => {
     event.preventDefault();
 
     const enteredText = commentTextRef.current.value;
 
     // We could validate here
 
-    sendRequest({ commentData: { text: enteredText }, quoteId: props.quoteId });
+    await sendRequest({
+      commentData: { text: enteredText },
+      quoteId: props.quoteId,
+    });
+
+    props.onCancel();
   };
 
   return (
@@ -39,7 +44,12 @@ const NewCommentForm = (props) => {
         <textarea id="comment" rows="5" ref={commentTextRef}></textarea>
       </div>
       <div className={classes.actions}>
-        <button className="btn">Add Comment</button>
+        <button onClick={props.onCancel} type="button" className="btn">
+          Cancel
+        </button>
+        <button type="submit" className="btn">
+          Add a Comment
+        </button>
       </div>
     </form>
   );
